@@ -90,8 +90,9 @@ class SaleOrderValidation(models.Model):
             for rec in self:
                 for id in rec.order_line:
                     prods = prods + "*" +str(id.product_id.name) + " : " + str(id.product_uom_qty) + "* \n"
-
-            custom_msg = "Hello *{}*, your Sale Order *{}* with amount *{} {}* is ready. \nYour order contains following items: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.amount_total),prods)
+            #Se cambia el campo self.amount por self.total_price para obtener el precio con impuestos incluidos
+            #custom_msg = "Hello *{}*, your Sale Order *{}* with amount *{} {}* is ready. \nYour order contains following items: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.amount_total),prods)
+            custom_msg = "Hola *{}*, tu orden de compra *{}* por el total de *{} {}* está confirmada. \nLa orden contiene lo siguiente: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.amount_total),prods)
             ph_no = [number for number in record_phone if number.isnumeric()]
             ph_no = "".join(ph_no)
             ph_no = "+" + ph_no

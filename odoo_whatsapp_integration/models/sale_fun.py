@@ -92,7 +92,7 @@ class SaleOrderValidation(models.Model):
                     prods = prods + "*" +str(id.product_id.name) + " : " + str(id.product_uom_qty) + "* \n"
             #Se cambia el campo self.amount por self.total_price para obtener el precio con impuestos incluidos
             #custom_msg = "Hello *{}*, your Sale Order *{}* with amount *{} {}* is ready. \nYour order contains following items: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.amount_total),prods)
-            custom_msg = "Hola *{}*, tu orden de compra *{}* por el total de *{} {}* está confirmada. \nLa orden contiene lo siguiente: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.amount_total),prods)
+            custom_msg = "Hola *{}*, tu orden de compra *{}* por el total de *{} {}* está confirmada. \nLa orden contiene lo siguiente: \n{}".format(str(self.partner_id.name),str(self.name),str(self.currency_id.symbol),str(self.price_total),prods)
             ph_no = [number for number in record_phone if number.isnumeric()]
             ph_no = "".join(ph_no)
             ph_no = "+" + ph_no
@@ -133,18 +133,18 @@ class SaleOrderValidation(models.Model):
             for each in sale_order_ids:
                 prods = ""
                 for id in each.order_line:
-                    prods = prods + "*" + "Product: "+str(id.product_id.name) + ", Qty: " + str(id.product_uom_qty) + "* \n"
+                    prods = prods + "*" + "Producto: "+str(id.product_id.name) + ", Cantidad: " + str(id.product_uom_qty) + "* \n"
                 product_all.append(prods)
 
-            custom_msg = "Hi" + " " + self.partner_id.name + ',' + '\n' + "Your Sale Orders" + '\n' + sale_numbers + \
-                         ' ' + '\n' + "are ready for review.\n"
+            custom_msg = "Hola" + " " + self.partner_id.name + ',' + '\n' + "Tu orden de compra" + '\n' + sale_numbers + \
+                         ' ' + '\n' + "está confirmada.\n"
             counter = 0
             for every in product_all:
-                custom_msg = custom_msg + "Your order " + "*" + sale_nums[
-                    counter] + "*" + " contains following items: \n{}".format(every) + '\n'
+                custom_msg = custom_msg + "Tu orden" + "*" + sale_nums[
+                    counter] + "*" + " contiene los siguientes items: \n{}".format(every) + '\n'
                 counter += 1
 
-            final_msg = custom_msg + "\nDo not hesitate to contact us if you have any questions."
+            final_msg = custom_msg + "\nComuniquenos cualquier consulta."
 
             ctx = dict(self.env.context)
             ctx.update({
